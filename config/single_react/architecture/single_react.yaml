@@ -1,0 +1,33 @@
+# Single Agent ReAct Architecture
+# A single LLM with tool access in a think-act-observe loop.
+# Use case: Baseline performance metric.
+
+experiment_name: "single_react_baseline"
+log_to_wandb: true
+wandb_project: "malo-lang-single-cbc"
+
+environment:
+  docker_image: "malo:latest"
+  setup_commands: []
+  timeout_seconds: 600
+
+architecture: "single_react"
+
+limits:
+  max_turns: 50
+  max_cost_usd: 5.00
+  observation_truncation_chars: 5000
+  max_message_chars: null
+  worker_max_turns: 10
+  random_seed: null
+  recursion_limit: 2000
+  challenge_timeout_seconds: 1800
+  worker_timeout_seconds: 300
+
+agents:
+
+  # Single agent for ReAct loop
+  agent:
+    model: "google/gemini-3-flash-preview"
+    temperature: 0.2
+    prompts_file: "../prompts/agent.yaml"

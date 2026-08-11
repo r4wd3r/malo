@@ -1,0 +1,43 @@
+# Orchestrator + Workers Architecture
+# Hierarchical Map-Reduce: Orchestrator plans, Workers execute in parallel.
+# Orchestrator uses structured JSON state, not chat history.
+# Workers are dynamically assigned specialist roles by the Orchestrator.
+
+experiment_name: "orchestrator_workers"
+log_to_wandb: true
+wandb_project: "malo-lang-orch-w-cbc"
+
+environment:
+  docker_image: "malo:latest"
+  setup_commands: []
+  timeout_seconds: 600
+
+architecture: "orchestrator_workers"
+
+limits:
+  max_turns: 50
+  max_cost_usd: 5.00
+  observation_truncation_chars: 5000
+  max_message_chars: null
+  worker_max_turns: 10
+  random_seed: null
+  recursion_limit: 2000
+  max_workers: 3  # Maximum parallel workers per orchestrator turn
+  worker_timeout_seconds: 300
+  challenge_timeout_seconds: 1800
+
+agents:
+
+  # Orchestrator: plans tasks using JSON state
+  orchestrator:
+    model: "google/gemini-3-flash-preview"
+    provider: "openrouter"
+    temperature: 0.2
+    prompts_file: "../prompts/orchestrator.yaml"
+
+  # Worker: executes tasks in mini ReAct loops with dynamic roles
+  worker:
+    model: "qwen3:1.7b"
+    provider: "ollama"
+    temperature: 0.2
+    prompts_file: "../prompts/worker.yaml"

@@ -1,0 +1,78 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "MaLO"
+version = "0.1.0"
+description = "A multi-agent framework for offensive security using LLMs. MaLO allows users to simulate and analyze various offensive security scenarios using large language models, providing insights and strategies for cybersecurity defense."
+authors = ["UCSC CyberSecurity Lab <scastro9@ucsc.edu>"]
+readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+packages = [{include = "MaLO"}]
+
+[tool.poetry.dependencies]
+python = ">=3.13,<3.15"
+rich = "*"
+pyyaml = "*"
+pydantic = "*"
+openai = "*"
+langgraph = "*"
+docker = "*"
+weave = {version = "*", optional = true}
+wandb = {version = "*", optional = true}
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "*"
+black = "*"
+isort = "*"
+pylint = "*"
+
+[tool.poetry.extras]
+weave = ["weave"]
+wandb = ["wandb"]
+observability = ["weave", "wandb"]
+
+[tool.poetry.scripts]
+malo = "MaLO.__main__:main"
+
+[tool.black]
+line-length = 80
+include = '\.py$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | venv
+  | \.env
+  | \.flake8
+  | benchmarks
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 80
+skip_glob = ["benchmarks/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+cache_dir = "/tmp/pytest_cache"
+filterwarnings = [
+  "ignore:.*SentryHubDeprecationWarning.*:Warning",
+  "ignore:Importing Send from langgraph.constants is deprecated.*:DeprecationWarning",
+  "ignore:The 'warn' method is deprecated.*:DeprecationWarning",
+]

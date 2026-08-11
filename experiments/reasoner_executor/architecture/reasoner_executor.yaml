@@ -1,0 +1,41 @@
+# Reasoner + Executor Architecture
+# Decoupled chain: Reasoner thinks, Executor acts.
+# Prevents tool hallucination by forcing a thought step.
+
+experiment_name: "reasoner_executor"
+log_to_wandb: false
+wandb_project: "malo-lang-reasoner-executor-cbc"
+
+environment:
+  docker_image: "malo:latest"
+  setup_commands: []
+  timeout_seconds: 600
+
+architecture: "reasoner_executor"
+
+limits:
+  max_turns: 50
+  max_cost_usd: 5.00
+  observation_truncation_chars: 5000
+  max_message_chars: null
+  worker_max_turns: 10
+  random_seed: null
+  recursion_limit: 2000
+  challenge_timeout_seconds: 1800
+  worker_timeout_seconds: 300
+  
+agents:
+
+  # Reasoner: analyzes and outputs JSON commands (no tool access)
+  orchestrator:
+    model: "qwen3:1.7b"
+    provider: "ollama"
+    temperature: 0.2
+    prompts_file: "../prompts/reasoner.yaml"
+
+  # Executor: parses commands and executes tools
+  worker:
+    model: "qwen3:1.7b"
+    provider: "ollama"
+    temperature: 0.2
+    prompts_file: "../prompts/executor.yaml"

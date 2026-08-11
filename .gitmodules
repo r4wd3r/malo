@@ -1,0 +1,8 @@
+[submodule "benchmarks/malo-benchmark"]
+	path = benchmarks/malo-benchmark
+	url = git@github.com:r4wd3r/malo-benchmark.git
+	ignore = dirty
+[submodule "benchmarks/NYU_CTF_Bench"]
+	path = benchmarks/NYU_CTF_Bench
+	url = https://github.com/NYU-LLM-CTF/NYU_CTF_Bench
+	ignore = dirty
