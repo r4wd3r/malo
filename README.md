@@ -10,11 +10,26 @@
 
 > 🏆 **Awarded by U.S. Cyber Command (USCYBERCOM) at CyberRecon 2025 (Hunter's Award) and 2026 (Best Presentation Award)** for earlier versions of this work.
 
-> 📄 The full paper is being presented at **IEEE CNS 2026**.
+
+## Paper
+[IEEE Conference on Communications and Network Security (CNS) 2026](https://ieeexplore.ieee.org/abstract/document/11720875)
+
+Citation:
+```
+@INPROCEEDINGS{castro2026_malo,
+  author={Castro, Sebastián R. and Taranenko, Iakov and Tsai, Astra and Lau, Nancy and Cardenas, Alvaro A.},
+  booktitle={2026 IEEE Conference on Communications and Network Security (CNS)}, 
+  title={MaLO: Multi-agent LLM Operations for Autonomous Security}, 
+  year={2026},
+  pages={1-9},
+  keywords={Modeling;Security;Complexity theory;Cognition;Cognitive systems;Tools;Large language models;Turning;Architecture;Computer architecture;autonomous cyber operations;multi-agent systems;large language models;security benchmarking;agent topology},
+  doi={10.1109/CNS69863.2026.11720875}}
+
+```
 
 ## Why MaLO?
 
-Most "multi-agent" security frameworks hardcode one pipeline and call it a day. MaLO treats **agent topology as a first-class variable**: swap between a single ReAct agent, a reasoner/executor split, or an orchestrator dispatching parallel workers (with or without a critic), and benchmark them head-to-head on identical tasks, tools, and prompts.
+Most multi-agent security frameworks hardcode one pipeline and call it a day. MaLO treats **agent topology as a first-class variable**: swap between a single ReAct agent, a reasoner/executor split, or an orchestrator dispatching parallel workers (with or without a critic), and benchmark them head-to-head on identical tasks, tools, and prompts.
 
 We used it to solve tasks up to **85x faster** than a human security expert and hit a **78.6%** solve rate on our 42-task benchmark. Full results in the paper.
 
@@ -50,32 +65,35 @@ MaLO uses **MaLO-format** challenges: a `challenge.yml` plus a `src/` directory.
 git clone --recurse-submodules git@github.com:<this_repo>
 cd MaLO
 ./scripts/setup.sh
+```
 
 See docs/SETUP.md for full prerequisites and setup details.
 
-Quick Start
+## Quick Start
 
 Single challenge:
-poetry run malo run --arch single_react -c path/to/challenge
+`poetry run malo run --arch single_react -c path/to/challenge`
 
 Batch run:
-poetry run malo run --arch single_react --batch benchmarks/malo-benchmark \
-  --output results.json
+`poetry run malo run --arch single_react --batch benchmarks/malo-benchmark \
+  --output results.json`
 
 Customize runs by editing YAML configs or using CLI overrides like --model and --provider. See docs/CONFIG.md and docs/CLI.md.
 
-CLI
+## CLI
 
 Use poetry run for CLI commands to ensure the project environment is active.
 
 Common commands:
+```
 - poetry run malo list
 - poetry run malo run --arch single_react -c <challenge>
 - poetry run malo run --config <path> --batch <dir> --output results.json
+```
 
 See docs/CLI.md for full CLI and layering details.
 
-Configuration
+## Configuration
 
 See docs/CONFIG.md for YAML structure, provider settings, and examples.
 
